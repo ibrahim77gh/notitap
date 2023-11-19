@@ -1,6 +1,7 @@
 /* @unocss-include */
 import { Editor } from "@tiptap/react";
 
+
 interface BubbleMenuItem {
   tooltip: string;
   action: (editor: Editor) => boolean;
@@ -21,63 +22,54 @@ export const generalButtons: BubbleMenuItem[] = [
     isActive: (editor: Editor) => editor.isActive("italic"),
     iconClass: "i-ri-italic",
   },
+  {
+    tooltip: "Underline",
+    action: (editor: Editor) => editor.chain().focus().toggleUnderline().run(),
+    isActive: (editor: Editor) => editor.isActive("underline"),
+    iconClass: "i-ri-underline",
+  },
+  {
+    tooltip: "Strike",
+    action: (editor: Editor) => editor.chain().focus().toggleStrike().run(),
+    isActive: (editor: Editor) => editor.isActive("strike"),
+    iconClass: "i-ri-strikethrough",
+  },
+  {
+    tooltip: "Link",
+    action: (openLinkModal: Function) => openLinkModal(),
+    isActive: (editor: Editor) => editor.isActive("link"),
+    iconClass: "i-ri-link",
+  },
+  {
+    tooltip: "Code",
+    action: (editor: Editor) => editor.chain().focus().toggleCodeBlock().run(),
+    isActive: (editor: Editor) => editor.isActive("code"),
+    iconClass: "i-mdi-code",
+  },
   // {
-  //   name: "underline",
-  //   label: "Underline",
-  //   action: (editor: Editor) => editor.chain().focus().toggleUnderline().run(),
-  //   isActive: (editor: Editor) => editor.isActive("underline"),
-  //   icon: RiUnderline,
+  //   name:'divider'
   // },
-  // {
-  //   name: "strike",
-  //   label: "Strike",
-  //   action: (editor: Editor) => editor.chain().focus().toggleStrike().run(),
-  //   isActive: (editor: Editor) => editor.isActive("strike"),
-  //   icon: RiStrikethrough,
-  // },
-  // {
-  //   name: "divider",
-  // },
-  // {
-  //   name: "link",
-  //   label: "Link",
-  //   action: (openLinkModal: Function) => openLinkModal(),
-  //   isActive: (editor: Editor) => editor.isActive("link"),
-  //   icon: RiLink,
-  // },
-  // {
-  //   name: "code",
-  //   label: "Code",
-  //   action: (editor: Editor) => editor.chain().focus().toggleCode().run(),
-  //   isActive: (editor: Editor) => editor.isActive("code"),
-  //   icon: RiCodeSSlashLine,
-  // },
-  // {
-  //   name: "divider",
-  // },
-  // {
-  //   name: "alignLeft",
-  //   label: "Align Left",
-  //   action: (editor: Editor) =>
-  //     editor.chain().focus().setTextAlign("left").run(),
-  //   isActive: (editor: Editor) => editor.isActive({ textAlign: "left" }),
-  //   icon: RiAlignLeft,
-  // },
-  // {
-  //   name: "alignCenter",
-  //   label: "Align Center",
-  //   action: (editor: Editor) =>
-  //     editor.chain().focus().setTextAlign("center").run(),
-  //   isActive: (editor: Editor) => editor.isActive({ textAlign: "center" }),
-  //   icon: RiAlignCenter,
-  // },
+  {
+    tooltip: "Align Left",
+    action: (editor: Editor) =>
+      editor.chain().focus().setTextAlign("left").run(),
+    isActive: (editor: Editor) => editor.isActive({ textAlign: "left" }),
+    iconClass: "i-mdi-align-horizontal-left",
+  },
+  {
+    tooltip: "Align Right",
+    action: (editor: Editor) =>
+      editor.chain().focus().setTextAlign("right").run(),
+    isActive: (editor: Editor) => editor.isActive({ textAlign: "right" }),
+    iconClass: "i-mdi-align-horizontal-right",
+  },
   // {
   //   name: "alignRight",
   //   label: "Align Right",
   //   action: (editor: Editor) =>
   //     editor.chain().focus().setTextAlign("right").run(),
   //   isActive: (editor: Editor) => editor.isActive({ textAlign: "right" }),
-  //   icon: RiAlignRight,
+  //   icon: RxAlignRight,
   // },
   // {
   //   name: "alignJustify",

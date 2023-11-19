@@ -90,7 +90,7 @@ export const ResizableMediaNodeView = ({
 
   useEffect(() => {
     mediaSetupOnLoad();
-  });
+  }, [node.attrs]);
 
   const [isHorizontalResizeActive, setIsHorizontalResizeActive] =
     useState(false);

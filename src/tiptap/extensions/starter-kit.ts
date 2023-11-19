@@ -24,12 +24,18 @@ import { Paragraph } from "./paragraph";
 import { SuperchargedTableExtensions } from "./supercharged-table";
 import { ResizableMedia } from "./resizableMedia";
 import { TrailingNode } from "./trailingNode";
-import { Commands } from "./slash-menu";
-import getSuggestionItems from "./suggestion/items";
-import renderItems from "./suggestion/renderItems";
-import { SlashMenuPlugin } from "prosemirror-slash-menu/dist";
-import { defaultElements } from "prosemirror-slash-menu-react";
-import { MenuElement } from "prosemirror-slash-menu/dist/types";
+
+// CodeBlock
+import { EditorContent, useEditor } from '@tiptap/react'
+import {createLowlight} from 'lowlight'
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
+import javascript from "highlight.js/lib/languages/javascript";
+import typescript from "highlight.js/lib/languages/typescript"
+import css from "highlight.js/lib/languages/css"
+
+// import html from "highlight.js/lib/languages/html"
+
+
 
 export interface PlaceholderOptions {
   emptyEditorClass: string;
@@ -122,9 +128,17 @@ interface GetExtensionsProps {
 export const getExtensions = ({
   openLinkModal,
 }: GetExtensionsProps): AnyExtension[] => {
+  const lowlight = createLowlight()
+  // load all highlight.js languages
+  // lowlight.register({html})
+  lowlight.register({css})
+  lowlight.register({javascript})
+  lowlight.register({typescript})
   return [
     // Necessary
-
+    CodeBlockLowlight.configure({
+      lowlight,
+    }),
     Document,
     DBlock,
     Paragraph,
