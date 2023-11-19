@@ -15,6 +15,8 @@
     "@mantine/core": "^7.2.2",
     "@tippyjs/react": "^4.2.6",
     "@tiptap/extension-code-block-lowlight": "^2.1.12",
+    "@tiptap/extension-collaboration": "^2.1.12",
+    "@tiptap/extension-collaboration-cursor": "^2.1.12",
     "@tiptap/extension-link": "^2.0.0-beta.43",
     "@tiptap/extension-placeholder": "^2.0.0-beta.53",
     "@tiptap/extension-table": "^2.0.0-beta.54",
@@ -38,7 +40,9 @@
     "react-icons": "^4.12.0",
     "react-router-dom": "^6.19.0",
     "tippy.js": "^6.3.7",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "y-websocket": "^1.5.0",
+    "yjs": "^13.6.8"
   },
   "devDependencies": {
     "@iconify-json/ic": "^1.1.7",

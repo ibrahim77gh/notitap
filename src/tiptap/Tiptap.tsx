@@ -2,7 +2,13 @@
 import { Editor } from "@tiptap/core";
 import { EditorContent, useEditor, BubbleMenu, FloatingMenu } from "@tiptap/react";
 import { debounce } from 'lodash';
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
+import * as Y from "yjs";
+import { WebsocketProvider } from 'y-websocket'
+import { useEffect, useState } from 'react';
+import Collaboration from '@tiptap/extension-collaboration'
+import CollaborationCursor from '@tiptap/extension-collaboration-cursor'
+// import { getRandomUser } from './';
 import "tippy.js/animations/shift-toward-subtle.css";
 // import applyDevTools from "prosemirror-dev-tools";
 
@@ -29,6 +35,8 @@ import { CustomBubbleMenu } from "./menus";
 import SlashMenu from "@/components/SlashMenu";
 
 export const Tiptap = () => {
+    const doc = new Y.Doc();
+    const [provider, setProvider] = useState<WebsocketProvider | null>(null);
   const logContent = useCallback(
     (e: Editor) => console.log(e.getJSON()),
     []
@@ -38,10 +46,24 @@ export const Tiptap = () => {
 
   const openLinkModal = () => setIsAddingNewLink(true);
 
-  const closeLinkModal = () => setIsAddingNewLink(false);
+    const closeLinkModal = () => setIsAddingNewLink(false);
+    useEffect(() => {
+        // Set up the WebsocketProvider
+        const newProvider = new WebsocketProvider('ws://localhost:1234', 'Page1', doc);
+        setProvider(newProvider);
+        newProvider.on('status', (event: { status: any; }) => {
+            console.log(event.status,'---------') // logs "connected" or "disconnected"
+        })
+    
+        // Clean up the provider when the component is unmounted
+        return () => {
+          newProvider.disconnect();
+        };
+      }, []); // Empty dependency array means this effect runs once, similar to componentDidMount
+    
 
-  const editor = useEditor({
-    extensions: getExtensions({ openLinkModal }),
+    const editor = useEditor({
+        extensions: getExtensions({ openLinkModal, doc,provider}),
     content,
     editorProps: {
       attributes: {

@@ -17,25 +17,26 @@ import { Node as ProsemirrorNode } from "prosemirror-model";
 import { Plugin } from "prosemirror-state";
 import { Decoration, DecorationSet } from "prosemirror-view";
 
-import { Document } from "./doc";
-import { DBlock } from "./dBlock";
-import { Link } from "./link";
-import { Paragraph } from "./paragraph";
-import { SuperchargedTableExtensions } from "./supercharged-table";
-import { ResizableMedia } from "./resizableMedia";
-import { TrailingNode } from "./trailingNode";
+import * as Y from "yjs";
+import { WebsocketProvider } from "y-websocket";
+import Collaboration from "@tiptap/extension-collaboration";
+// import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 
 // CodeBlock
-import { EditorContent, useEditor } from '@tiptap/react'
-import {createLowlight} from 'lowlight'
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
+import { createLowlight } from "lowlight";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import javascript from "highlight.js/lib/languages/javascript";
-import typescript from "highlight.js/lib/languages/typescript"
-import css from "highlight.js/lib/languages/css"
+import typescript from "highlight.js/lib/languages/typescript";
+import css from "highlight.js/lib/languages/css";
+import { TrailingNode } from "./trailingNode";
+import { ResizableMedia } from "./resizableMedia";
+import { SuperchargedTableExtensions } from "./supercharged-table";
+import { Paragraph } from "./paragraph";
+import { Link } from "./link";
+import { DBlock } from "./dBlock";
+import { Document } from "./doc";
 
 // import html from "highlight.js/lib/languages/html"
-
-
 
 export interface PlaceholderOptions {
   emptyEditorClass: string;
@@ -52,8 +53,6 @@ export interface PlaceholderOptions {
   showOnlyCurrent: boolean;
   includeChildren: boolean;
 }
-
-
 
 export const Placeholder = Extension.create<PlaceholderOptions>({
   name: "placeholder",
@@ -123,18 +122,31 @@ export const Placeholder = Extension.create<PlaceholderOptions>({
 
 interface GetExtensionsProps {
   openLinkModal: () => void;
+  doc: any;
+  provider: any;
 }
 
 export const getExtensions = ({
   openLinkModal,
+  doc,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  provider,
 }: GetExtensionsProps): AnyExtension[] => {
-  const lowlight = createLowlight()
+  const lowlight = createLowlight();
   // load all highlight.js languages
   // lowlight.register({html})
-  lowlight.register({css})
-  lowlight.register({javascript})
-  lowlight.register({typescript})
+  lowlight.register({ css });
+  lowlight.register({ javascript });
+  lowlight.register({ typescript });
   return [
+    Collaboration.configure({
+      document: doc,
+    }),
+    // CollaborationCursor.configure({
+    //   provider,
+    //   user: { name: "John Doe", color: "#ffcc00" },
+    // }),
+
     // Necessary
     CodeBlockLowlight.configure({
       lowlight,
