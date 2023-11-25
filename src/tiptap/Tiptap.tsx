@@ -54,7 +54,7 @@ export const Tiptap = () => {
         newProvider.on('status', (event: { status: any; }) => {
             console.log(event.status,'---------') // logs "connected" or "disconnected"
         })
-    
+
         // Clean up the provider when the component is unmounted
         return () => {
           newProvider.disconnect();
@@ -64,18 +64,18 @@ export const Tiptap = () => {
 
     const editor = useEditor({
         extensions: getExtensions({ openLinkModal, doc,provider}),
-    content,
-    editorProps: {
-      attributes: {
-        class: `${notitapEditorClass} focus:outline-none w-full`,
-        spellcheck: "false",
-        suppressContentEditableWarning: "true",
-      },
-    },
-    onUpdate: debounce(({ editor: e }) => {
-      logContent(e);
-    }, 500),
-  });
+        content,
+        editorProps: {
+        attributes: {
+            class: `${notitapEditorClass} focus:outline-none w-full`,
+            spellcheck: "false",
+            suppressContentEditableWarning: "true",
+        },
+        },
+        onUpdate: debounce(({ editor: e }) => {
+        logContent(e);
+        }, 500),
+    });
 
 
   return (
