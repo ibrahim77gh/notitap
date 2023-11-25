@@ -35,6 +35,7 @@ import { Paragraph } from "./paragraph";
 import { Link } from "./link";
 import { DBlock } from "./dBlock";
 import { Document } from "./doc";
+import { BackColor } from "./back-color/back-color";
 
 // import html from "highlight.js/lib/languages/html"
 
@@ -142,6 +143,7 @@ export const getExtensions = ({
     Collaboration.configure({
       document: doc,
     }),
+    BackColor,
     // CollaborationCursor.configure({
     //   provider,
     //   user: { name: "John Doe", color: "#ffcc00" },

@@ -111,9 +111,7 @@ export const DBlock = Node.create<DBlockOptions>({
   
           if (nodeFrom <= from && to <= nodeTo) currentActiveNodeTo = nodeTo;
   
-          return
-   
-  false;
+          return false;
         });
   
         const content = doc.slice(from, currentActiveNodeTo)?.toJSON().content;
