@@ -22,14 +22,47 @@ const SlashMenu = ({ editor }: { editor: Editor }) => {
     });
 
   return (
-    <>
+    <>  
         <button 
             className="flex items-center gap-2 p-1 rounded min-w-[280px] hover:bg-zinc-100"
             onClick={() => 
-                editor.chain().focus().toggleHeading({ level: 1 }).run()
+                editor.chain().focus().setParagraph().deleteRange({
+                    from: editor.state.selection.head - 1,
+                    to: editor.state.selection.head
+                    }).run()
             }
         >
             <img className="w-12 border border-zinc-200 rounded" src="https://www.notion.so/images/blocks/text/en-US.png" />
+            <div className="flex flex-col text-left">
+                <span className="text-sm">Normal</span>
+                <span className="text-xs text-zinc-400">Normal Text</span>
+            </div>
+        </button>
+        {/* <button 
+            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover:bg-zinc-100"
+            onClick={() => 
+                editor.chain().focus().setSmallText().deleteRange({
+                    from: editor.state.selection.head - 1,
+                    to: editor.state.selection.head
+                    }).run()
+            }
+        >
+            <img className="w-12 border border-zinc-200 rounded" src="https://www.notion.so/images/blocks/text/en-US.png" />
+            <div className="flex flex-col text-left">
+                <span className="text-sm">Small</span>
+                <span className="text-xs text-zinc-400">Small Text</span>
+            </div>
+        </button> */}
+        <button 
+            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover:bg-zinc-100"
+            onClick={() => 
+                editor.chain().focus().toggleHeading({ level: 1 }).deleteRange({
+                    from: editor.state.selection.head - 1,
+                    to: editor.state.selection.head
+                    }).run()
+            }
+        >
+            <img className="w-12 border border-zinc-200 rounded" src="https://www.notion.so/images/blocks/header.57a7576a.png" />
             <div className="flex flex-col text-left">
                 <span className="text-sm">Heading 1</span>
                 <span className="text-xs text-zinc-400">Big section heading</span>
@@ -38,7 +71,10 @@ const SlashMenu = ({ editor }: { editor: Editor }) => {
         <button 
             className="flex items-center gap-2 p-1 rounded min-w-[280px] hover:bg-zinc-100"
             onClick={() => 
-                editor.chain().focus().toggleHeading({ level: 2 }).run()
+                editor.chain().focus().toggleHeading({ level: 2 }).deleteRange({
+                    from: editor.state.selection.head - 1,
+                    to: editor.state.selection.head
+                    }).run()
             }
         >
             <img className="w-12 border border-zinc-200 rounded" src="https://www.notion.so/images/blocks/subheader.9aab4769.png" />
@@ -50,7 +86,10 @@ const SlashMenu = ({ editor }: { editor: Editor }) => {
         <button 
             className="flex items-center gap-2 p-1 rounded min-w-[280px] hover:bg-zinc-100"
             onClick={() => 
-                editor.chain().focus().toggleHeading({ level: 3 }).run()
+                editor.chain().focus().toggleHeading({ level: 3 }).deleteRange({
+                    from: editor.state.selection.head - 1,
+                    to: editor.state.selection.head
+                    }).run()
             }
         >
             <img className="w-12 border border-zinc-200 rounded" src="https://www.notion.so/images/blocks/subsubheader.d0ed0bb3.png" />
@@ -91,12 +130,41 @@ const SlashMenu = ({ editor }: { editor: Editor }) => {
         </button>
         <button 
             className="flex items-center gap-2 p-1 rounded min-w-[280px] hover:bg-zinc-100"
-            onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+            onClick={() => editor.chain().focus().toggleCodeBlock().deleteRange({
+                from: editor.state.selection.head - 1,
+                to: editor.state.selection.head
+                }).run()}
         >
             <img className="w-12 border border-zinc-200 rounded" src="https://www.notion.so/images/blocks/code.a8b201f4.png" />
             <div className="flex flex-col text-left">
                 <span className="text-sm">Code</span>
                 <span className="text-xs text-zinc-400">Add Code</span>
+            </div>
+        </button>
+        <button 
+            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover:bg-zinc-100"
+            onClick={() => editor.chain().focus().deleteRange({
+                from: editor.state.selection.head - 1,
+                to: editor.state.selection.head
+                }).toggleOrderedList().run()}
+        >
+            <img className="w-12 border border-zinc-200 rounded" src="https://www.notion.so/images/blocks/numbered-list.0406affe.png" />
+            <div className="flex flex-col text-left">
+                <span className="text-sm">Numbered List</span>
+                <span className="text-xs text-zinc-400">Add Numbered List</span>
+            </div>
+        </button>
+        <button 
+            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover:bg-zinc-100"
+            onClick={() => editor.chain().focus().deleteRange({
+                from: editor.state.selection.head - 1,
+                to: editor.state.selection.head
+                }).toggleBulletList().run()}
+        >
+            <img className="w-12 border border-zinc-200 rounded" src="https://www.notion.so/images/blocks/bulleted-list.0e87e917.png" />
+            <div className="flex flex-col text-left">
+                <span className="text-sm">Bullet List</span>
+                <span className="text-xs text-zinc-400">Add Bullet List</span>
             </div>
         </button>
     </>

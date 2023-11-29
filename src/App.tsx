@@ -1,15 +1,24 @@
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { usePages } from "./contexts/PageContext";
 import { Tiptap } from "./tiptap";
-
-import "./App.css";
+import Home from "./Home";
+import "./styles.css";
 
 function App() {
+  const { allPages } = usePages();
   return (
-    <div className="App container mx-auto px-16 flex flex-col gap-4 max-w-[100ch]">
-      <main className="flex justify-start w-full">
-        <Tiptap />
-      </main>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />}>
+          {allPages?.map((page) => (
+            <Route key={page.id} path={`${page.title}`} element={<Tiptap page={page} />} />
+          ))}
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
+
 }
 
 export default App;

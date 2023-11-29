@@ -85,37 +85,33 @@ export const DBlock = Node.create<DBlockOptions>({
   addKeyboardShortcuts() {
     return {
       "Mod-Alt-0": () => this.editor.commands.setDBlock(),
-      Enter: ({ editor, state }) => {
+      Enter: ({ editor }) => {
         const {
           selection: { $head, from, to },
           doc,
-        } = state;
-  
+        } = editor.state;
+
         const parent = $head.node($head.depth - 1);
-        const isInsideCodeBlock = parent.type.name === "codeBlock";
-  
-        if (isInsideCodeBlock) return false; // Prevent creating a new block inside codeblock
-  
+
+        if (parent.type.name !== "dBlock") return false;
+
         let currentActiveNodeTo = -1;
-  
+
         doc.descendants((node, pos) => {
-          if (currentActiveNodeTo !== -1) return
-   
-  false;
+          if (currentActiveNodeTo !== -1) return false;
           // eslint-disable-next-line consistent-return
-  
-          
-  if (node.type.name === this.name) return;
-  
+          // console.log(node)
+          if (node.type.name === this.name) return;
+
           const [nodeFrom, nodeTo] = [pos, pos + node.nodeSize];
-  
+
           if (nodeFrom <= from && to <= nodeTo) currentActiveNodeTo = nodeTo;
-  
+
           return false;
         });
-  
+
         const content = doc.slice(from, currentActiveNodeTo)?.toJSON().content;
-  
+
         return editor
           .chain()
           .insertContentAt(
@@ -128,6 +124,6 @@ export const DBlock = Node.create<DBlockOptions>({
           .focus(from + 4)
           .run();
       },
-    }
+    };
   }
 });

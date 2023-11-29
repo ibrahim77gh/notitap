@@ -14,7 +14,7 @@ export const content: Content = {
           content: [
             {
               type: "text",
-              text: "Welcome to Real Time Edior.",
+              text: "Welcome to Real Time Editor.",
             },
           ],
         },

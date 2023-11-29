@@ -167,21 +167,21 @@ export const ResizableMedia = Node.create<MediaOptions>({
         },
 
         openPrompt:
-        (options) =>
-        ({ tr, commands }) => {
-          const { "media-type": mediaType, alt, title, width, height } = options;
+          (options) =>
+          ({ tr, commands }) => {
+            const { "media-type": mediaType, alt, title, width, height } = options;
 
-          const onSubmit = async (src: string) => {
-            const attrs = { src, "media-type": mediaType, alt, title, width, height };
-            await commands.setMedia(attrs)(tr);
-          };
+            const onSubmit = async (src: string) => {
+              const attrs = { src, "media-type": mediaType, alt, title, width, height };
+              await commands.setMedia(attrs)(tr);
+            };
 
-          // Basic prompt implementation, you might want to use a more sophisticated prompt/modal library
-          const link = window.prompt(`Enter ${mediaType === "img" ? "image" : "video"} URL:`, "");
+            // Basic prompt implementation, you might want to use a more sophisticated prompt/modal library
+            const link = window.prompt(`Enter ${mediaType === "img" ? "image" : "video"} URL:`, "");
 
-          if (link) {
-            onSubmit(link);
-          }
+            if (link) {
+              onSubmit(link);
+            }
         },
 
     };

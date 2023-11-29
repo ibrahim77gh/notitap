@@ -17,8 +17,6 @@ import { Node as ProsemirrorNode } from "prosemirror-model";
 import { Plugin } from "prosemirror-state";
 import { Decoration, DecorationSet } from "prosemirror-view";
 
-import * as Y from "yjs";
-import { WebsocketProvider } from "y-websocket";
 import Collaboration from "@tiptap/extension-collaboration";
 // import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 
@@ -35,7 +33,10 @@ import { Paragraph } from "./paragraph";
 import { Link } from "./link";
 import { DBlock } from "./dBlock";
 import { Document } from "./doc";
-import { BackColor } from "./back-color/back-color";
+import { FontSize } from "./font-size/font-size";
+import { SmallText } from "./SmallText";
+// import { BackColor } from "./back-color/back-color";
+
 
 // import html from "highlight.js/lib/languages/html"
 
@@ -143,19 +144,20 @@ export const getExtensions = ({
     Collaboration.configure({
       document: doc,
     }),
-    BackColor,
     // CollaborationCursor.configure({
     //   provider,
     //   user: { name: "John Doe", color: "#ffcc00" },
     // }),
 
     // Necessary
+    FontSize,
     CodeBlockLowlight.configure({
       lowlight,
     }),
     Document,
     DBlock,
     Paragraph,
+    SmallText,
     Text,
     DropCursor.configure({
       width: 2,
@@ -199,18 +201,20 @@ export const getExtensions = ({
         fd.append("file", image);
 
         try {
-          const response = await fetch("https://api.imgur.com/3/image", {
+          const response = await fetch(`${import.meta.env.VITE_API_URL}/api/image/`, {
             method: "POST",
             body: fd,
           });
 
-          console.log(await response.json());
+          const filename = await response?.json();
+          if (filename) {
+            return `${import.meta.env.VITE_API_URL}/uploads/${filename}`;
+          }
         } catch {
           // do your thing
         } finally {
           // do your thing
         }
-
         return "https://source.unsplash.com/8xznAGy4HcY/800x400";
       },
     }),
