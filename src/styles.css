@@ -132,14 +132,17 @@
   }
   
   .side-navigation-bar {
-    position: sticky;
+    position: fixed;
     top: 0;
-    width: 270px;
+    left: 0;
     height: 100vh;
+    overflow-y: auto;
     background: rgb(247, 246, 243);
-    flex-grow: 0;
-    flex-shrink: 0;
+    padding: 20px; /* Adjust the padding as needed */
+    box-sizing: border-box; /* Include padding in the width */
+    z-index: 1000; /* Adjust the z-index as needed */
   }
+  
   
   .side-navigation-bar > div {
     padding: 0.5rem 1rem;
