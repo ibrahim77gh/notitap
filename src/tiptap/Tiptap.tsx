@@ -96,9 +96,7 @@ export const Tiptap: React.FC<{ page: Page }> = ({ page }) => {
                 if (response?.data?.content) {
                     // Introduce a delay of 5 seconds before setting the content
                     // setTimeout(() => {
-                    if (editor?.getText().length == 0) {
                         editor?.commands.setContent(response?.data?.content);
-                    }
                     // }, 10); // 5000 milliseconds = 5 seconds
                   }
             })

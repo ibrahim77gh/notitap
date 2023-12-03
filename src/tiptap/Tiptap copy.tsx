@@ -14,54 +14,39 @@ import "tippy.js/animations/shift-toward-subtle.css";
 
 import { getExtensions } from "./extensions";
 // import { CustomBubbleMenu, LinkBubbleMenu } from "./menus";
-import { content } from "./mocks";
-import { notitapEditorClass } from './proseClassString'
 
+import { notitapEditorClass } from './proseClassString'
+import axios from 'axios';
 import "./styles/tiptap.scss";
 import "highlight.js/styles/github.css";
 
 // import 'highlight.js/styles/github-dark.css';
-import { BsArrowUpRight } from 'react-icons/bs';
-import {
-    RxFontBold,
-    RxFontItalic,
-    RxStrikethrough,
-    RxChevronDown,
-    RxChatBubble,
-    RxCode
-} from 'react-icons/rx'
-import { BubbleButton } from '../components/BubbleButton';
 import { CustomBubbleMenu } from "./menus";
 import SlashMenu from "@/components/SlashMenu";
 
-export const Tiptap = () => {
+type Page = {
+    id: number;
+    title: string;
+    content: string;
+};
+
+export const Tiptap: React.FC<{ page: Page }> = ({ page }) => {
+
+    const pageTitle = page.title
+    const [content,setContent]=useState()
     const doc = new Y.Doc();
     const [provider, setProvider] = useState<WebsocketProvider | null>(null);
-  const logContent = useCallback(
+    const logContent = useCallback(
     (e: Editor) => console.log(e.getJSON()),
     []
   );
+    const [htmlContent, setHtmlContent] = useState('<p>Your Editor</p>');
+    const [isAddingNewLink, setIsAddingNewLink] = useState(false);
 
-  const [isAddingNewLink, setIsAddingNewLink] = useState(false);
-
-  const openLinkModal = () => setIsAddingNewLink(true);
+    const openLinkModal = () => setIsAddingNewLink(true);
 
     const closeLinkModal = () => setIsAddingNewLink(false);
-    // useEffect(() => {
-    //     // Set up the WebsocketProvider
-    //     const newProvider = new WebsocketProvider('ws://localhost:1234', 'Page1', doc);
-    //     setProvider(newProvider);
-    //     newProvider.on('status', (event: { status: any; }) => {
-    //         console.log(event.status,'---------') // logs "connected" or "disconnected"
-    //     })
-
-    //     // Clean up the provider when the component is unmounted
-    //     return () => {
-    //       newProvider.disconnect();
-    //     };
-    //   }, []); // Empty dependency array means this effect runs once, similar to componentDidMount
     
-
     const editor = useEditor({
         extensions: getExtensions({ openLinkModal, doc,provider}),
         content,
@@ -73,11 +58,53 @@ export const Tiptap = () => {
         },
         },
         onUpdate: debounce(({ editor: e }) => {
+            setHtmlContent(e?.getHTML())
         logContent(e);
         }, 500),
     });
+    
+    useEffect(() => {
+        if (editor) {   
+            getData()
+        }
+    },[editor])
+    useEffect(() => {
+        const saveInterval = setInterval(saveHtmlContent, 30000);
+        const newProvider = new WebsocketProvider('ws://localhost:1234', pageTitle, doc);
+        setProvider(newProvider);
+        newProvider.on('status', (event: { status: any; }) => {
+            console.log(event.status,'---------') // logs "connected" or "disconnected"
+        })
+        return () => {
+          clearInterval(saveInterval);
+        };
+        
+    }, [htmlContent]); // Empty dependency array means this effect runs once, similar to componentDidMount
+    
+    const saveHtmlContent = () => {
+        axios.post(`${import.meta.env.VITE_API_URL}/api/page/save`, { title:pageTitle,content:htmlContent })
+      .then(response => console.log(response.data))
+      .catch(error => console.error('Error saving HTML content:', error));
 
+      };
 
+    const getData = () => {
+        axios.get(`${import.meta.env.VITE_API_URL}/api/page/${pageTitle}`)
+            .then(response => {
+              // Handle the successful response here
+                console.log('Response:', response?.data?.content);
+                if (response?.data?.content) {
+                    // Introduce a delay of 5 seconds before setting the content
+                    // setTimeout(() => {
+                        editor?.commands.setContent(response?.data?.content);
+                    // }, 10); // 5000 milliseconds = 5 seconds
+                  }
+            })
+            .catch(error => {
+              // Handle errors here
+              console.error('Error:', error);
+            });
+    }
   return (
     <>
         {/* <CustomBubbleMenu editor={editor} /> */}
@@ -111,46 +138,7 @@ export const Tiptap = () => {
     </style>
 
     {editor && (
-        <CustomBubbleMenu className="bg-white shadow-xl border border-zinc-200 shadow-black/20 rounded-lg overflow-hidden flex divide-x divide-x-zinc-600"
-            editor={editor}
-        >
-
-        <BubbleButton>
-            Text <RxChevronDown  className="w-4 h-4" />
-        </BubbleButton>
-        <BubbleButton>
-            <BsArrowUpRight className="w-4 h-4" /> Link
-        </BubbleButton>
-        <BubbleButton>
-            <RxChatBubble className="w-4 h-4" /> Comment
-        </BubbleButton>
-        <div className="flex items-center">
-            <BubbleButton
-                onClick={() => editor.chain().focus().toggleBold().run()}
-                data-active={editor.isActive('bold')}
-            >
-                <RxFontBold className="w-4 h-4" /> 
-            </BubbleButton>
-            <BubbleButton
-                onClick={() => editor.chain().focus().toggleItalic().run()}
-                data-active={editor.isActive('italic')}
-            >
-                <RxFontItalic className="w-4 h-4" /> 
-            </BubbleButton>
-            <BubbleButton
-                onClick={() => editor.chain().focus().toggleStrike().run()}
-                data-active={editor.isActive('strike')}
-            >
-                <RxStrikethrough className="w-4 h-4" /> 
-            </BubbleButton>
-            {/* <BubbleButton
-                onClick={() => editor.chain().focus().toggleCode().run()}
-                data-active={editor.isActive('code')}
-            >
-                <RxCode className="w-4 h-4" /> 
-            </BubbleButton> */}
-        </div>
-        </CustomBubbleMenu>
+        <CustomBubbleMenu editor={editor} />
     )}
   </>
   );
