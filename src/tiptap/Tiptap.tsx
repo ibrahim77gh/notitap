@@ -37,7 +37,7 @@ export const Tiptap: React.FC<{ page: Page }> = ({ page }) => {
     const doc = new Y.Doc();
     const [provider, setProvider] = useState<WebsocketProvider | null>(null);
     const logContent = useCallback(
-    (e: Editor) => console.log(e.getJSON()),
+    (e: Editor) => console.log(e.getJSON(),'json',e?.getHTML()),
     []
   );
     const [htmlContent, setHtmlContent] = useState('<p>Your Editor</p>');
@@ -62,11 +62,16 @@ export const Tiptap: React.FC<{ page: Page }> = ({ page }) => {
         logContent(e);
         }, 500),
     });
-    
+    // '<div data-type="d-block"><p></p></div>'
     useEffect(() => {
-        if (editor) {   
-            getData()
-        }
+        const timer = setTimeout(() => {
+            console.log(editor?.getHTML(), 'editor HTML content after 500 milliseconds');
+            if (editor?.getHTML() == '<div data-type="d-block"><p></p></div>') {
+                getData()
+            }
+        }, 500);
+        // Cleanup function to clear the timer when the component is unmounted
+        return () => clearTimeout(timer);
     },[editor])
     useEffect(() => {
         const saveInterval = setInterval(saveHtmlContent, 30000);
@@ -91,15 +96,8 @@ export const Tiptap: React.FC<{ page: Page }> = ({ page }) => {
     const getData = () => {
         axios.get(`${import.meta.env.VITE_API_URL}/api/page/${pageTitle}`)
             .then(response => {
-              // Handle the successful response here
-                console.log('Response:', response?.data?.content);
                 if (response?.data?.content) {
-                    // Introduce a delay of 5 seconds before setting the content
-                    // setTimeout(() => {
-                    if (editor?.getText().length == 0) {
                         editor?.commands.setContent(response?.data?.content);
-                    }
-                    // }, 10); // 5000 milliseconds = 5 seconds
                   }
             })
             .catch(error => {
