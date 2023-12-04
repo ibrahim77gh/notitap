@@ -103,8 +103,8 @@ export const TableCellNodeView: FC<NodeViewProps> = ({
     if (left) left += 5;
 
     return {
-      top: `${top}px`,
-      left: `${left}px`,
+      top: `0px`,
+      left: `0x`,
     };
   };
 
