@@ -21,7 +21,7 @@ import "./styles/tiptap.scss";
 import "highlight.js/styles/github.css";
 
 // import 'highlight.js/styles/github-dark.css';
-import { CustomBubbleMenu } from "./menus";
+import { CustomBubbleMenu, LinkBubbleMenu } from "./menus";
 import SlashMenu from "@/components/SlashMenu";
 
 type Page = {
@@ -138,7 +138,10 @@ export const Tiptap: React.FC<{ page: Page }> = ({ page }) => {
     </style>
 
     {editor && (
-        <CustomBubbleMenu editor={editor} />
+        <>
+            <CustomBubbleMenu editor={editor} />
+            <LinkBubbleMenu editor={editor} />
+        </>
     )}
   </>
   );
