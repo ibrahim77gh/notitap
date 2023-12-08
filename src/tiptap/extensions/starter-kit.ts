@@ -35,6 +35,9 @@ import { DBlock } from "./dBlock";
 import { Document } from "./doc";
 import { FontSize } from "./font-size/font-size";
 import { SmallText } from "./SmallText";
+import Color from "@tiptap/extension-color"
+import TextStyle from "@tiptap/extension-text-style";
+
 // import { BackColor } from "./back-color/back-color";
 
 
@@ -154,6 +157,10 @@ export const getExtensions = ({
     CodeBlockLowlight.configure({
       lowlight,
     }),
+    TextStyle,
+    Color.configure({
+      types: ['textStyle'],
+    }),
     Document,
     DBlock,
     Paragraph,
@@ -187,6 +194,9 @@ export const getExtensions = ({
     OrderedList,
     Heading.configure({
       levels: [1, 2, 3],
+      HTMLAttributes: {
+        class: 'heading-color',
+      },
     }),
     TrailingNode,
 

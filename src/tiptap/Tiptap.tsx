@@ -15,7 +15,6 @@ import "tippy.js/animations/shift-toward-subtle.css";
 import { getExtensions } from "./extensions";
 // import { CustomBubbleMenu, LinkBubbleMenu } from "./menus";
 
-import { notitapEditorClass } from './proseClassString'
 import axios from 'axios';
 import "./styles/tiptap.scss";
 import "highlight.js/styles/github.css";
@@ -23,6 +22,7 @@ import "highlight.js/styles/github.css";
 // import 'highlight.js/styles/github-dark.css';
 import { CustomBubbleMenu, LinkBubbleMenu } from "./menus";
 import SlashMenu from "@/components/SlashMenu";
+import { useDarkMode } from "@/contexts/DarkModeContext";
 
 type Page = {
     id: number;
@@ -46,6 +46,10 @@ export const Tiptap: React.FC<{ page: Page }> = ({ page }) => {
     const openLinkModal = () => setIsAddingNewLink(true);
 
     const closeLinkModal = () => setIsAddingNewLink(false);
+
+    const { darkMode } = useDarkMode(); 
+
+    const notitapEditorClass = `prose prose-p:my-2 prose-h1:my-2 prose-h2:my-2 prose-h3:my-2 prose-ul:my-2 prose-ol:my-2 max-w-none ${darkMode ? 'text-white' : 'text-black'}`;
     
     const editor = useEditor({
         extensions: getExtensions({ openLinkModal, doc,provider}),
@@ -59,13 +63,25 @@ export const Tiptap: React.FC<{ page: Page }> = ({ page }) => {
         },
         onUpdate: debounce(({ editor: e }) => {
             setHtmlContent(e?.getHTML())
-        logContent(e);
+        // logContent(e);
         }, 500),
     });
+
+    useEffect(() => {
+        editor?.setOptions({
+            editorProps: {
+              attributes: {
+                class: `${notitapEditorClass} focus:outline-none w-full`,
+              },
+            },
+          })
+    }, [darkMode])
+
+
     // '<div data-type="d-block"><p></p></div>'
     useEffect(() => {
         const timer = setTimeout(() => {
-            console.log(editor?.getHTML(), 'editor HTML content after 500 milliseconds');
+            // console.log(editor?.getHTML(), 'editor HTML content after 500 milliseconds');
             if (editor?.getHTML() == '<div data-type="d-block"><p></p></div>') {
                 getData()
             }
@@ -105,6 +121,8 @@ export const Tiptap: React.FC<{ page: Page }> = ({ page }) => {
               console.error('Error:', error);
             });
     }
+
+    const floatMenuClass = `${darkMode ? 'bg-black' : 'bg-white'} py-2 px-1 shadow-xl border gap-1 border-zinc-200 shadow-black/20 rounded-lg overflow-hidden flex flex-col`
   return (
     <>
         {/* <CustomBubbleMenu editor={editor} /> */}
@@ -112,7 +130,7 @@ export const Tiptap: React.FC<{ page: Page }> = ({ page }) => {
         {/* <LinkBubbleMenu editor={editor} /> */}
     {editor && (
         <>
-            <FloatingMenu className="bg-white py-2 px-1 shadow-xl border gap-1 border-zinc-200 shadow-black/20 rounded-lg overflow-hidden flex flex-col"
+            <FloatingMenu className={floatMenuClass}
                 editor={editor}
                 shouldShow={({ state }) => {
                     const { $from } = state.selection;

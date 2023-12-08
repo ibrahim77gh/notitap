@@ -24,7 +24,7 @@ const SlashMenu = ({ editor }: { editor: Editor }) => {
   return (
     <>  
         <button 
-            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover:bg-zinc-100"
+            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover-effect"
             onClick={() => 
                 editor.chain().focus().setParagraph().deleteRange({
                     from: editor.state.selection.head - 1,
@@ -39,7 +39,7 @@ const SlashMenu = ({ editor }: { editor: Editor }) => {
             </div>
         </button>
         {/* <button 
-            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover:bg-zinc-100"
+            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover-effect"
             onClick={() => 
                 editor.chain().focus().setSmallText().deleteRange({
                     from: editor.state.selection.head - 1,
@@ -54,7 +54,7 @@ const SlashMenu = ({ editor }: { editor: Editor }) => {
             </div>
         </button> */}
         <button 
-            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover:bg-zinc-100"
+            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover-effect"
             onClick={() => 
                 editor.chain().focus().toggleHeading({ level: 1 }).deleteRange({
                     from: editor.state.selection.head - 1,
@@ -69,7 +69,7 @@ const SlashMenu = ({ editor }: { editor: Editor }) => {
             </div>
         </button>
         <button 
-            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover:bg-zinc-100"
+            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover-effect"
             onClick={() => 
                 editor.chain().focus().toggleHeading({ level: 2 }).deleteRange({
                     from: editor.state.selection.head - 1,
@@ -84,7 +84,7 @@ const SlashMenu = ({ editor }: { editor: Editor }) => {
             </div>
         </button>
         <button 
-            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover:bg-zinc-100"
+            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover-effect"
             onClick={() => 
                 editor.chain().focus().toggleHeading({ level: 3 }).deleteRange({
                     from: editor.state.selection.head - 1,
@@ -99,7 +99,7 @@ const SlashMenu = ({ editor }: { editor: Editor }) => {
             </div>
         </button>
         <button 
-            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover:bg-zinc-100"
+            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover-effect"
             onClick={() => addTable()}
         >
             <img className="w-12 border border-zinc-200 rounded" src="https://www.notion.so/images/blocks/simple-table.e31a23bb.png" />
@@ -109,7 +109,7 @@ const SlashMenu = ({ editor }: { editor: Editor }) => {
             </div>
         </button>
         <button 
-            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover:bg-zinc-100"
+            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover-effect"
             onClick={() => addImage()}
         >
             <img className="w-12 border border-zinc-200 rounded" src="https://www.notion.so/images/blocks/image.33d80a98.png" />
@@ -119,7 +119,7 @@ const SlashMenu = ({ editor }: { editor: Editor }) => {
             </div>
         </button>
         <button 
-            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover:bg-zinc-100"
+            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover-effect"
             onClick={() => addVideo()}
         >
             <img className="w-12 border border-zinc-200 rounded" src="https://www.notion.so/images/blocks/video.ceeec2c7.png" />
@@ -129,7 +129,7 @@ const SlashMenu = ({ editor }: { editor: Editor }) => {
             </div>
         </button>
         <button 
-            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover:bg-zinc-100"
+            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover-effect"
             onClick={() => editor.chain().focus().toggleCodeBlock().deleteRange({
                 from: editor.state.selection.head - 1,
                 to: editor.state.selection.head
@@ -142,7 +142,7 @@ const SlashMenu = ({ editor }: { editor: Editor }) => {
             </div>
         </button>
         <button 
-            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover:bg-zinc-100"
+            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover-effect"
             onClick={() => editor.chain().focus().deleteRange({
                 from: editor.state.selection.head - 1,
                 to: editor.state.selection.head
@@ -155,7 +155,7 @@ const SlashMenu = ({ editor }: { editor: Editor }) => {
             </div>
         </button>
         <button 
-            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover:bg-zinc-100"
+            className="flex items-center gap-2 p-1 rounded min-w-[280px] hover-effect"
             onClick={() => editor.chain().focus().deleteRange({
                 from: editor.state.selection.head - 1,
                 to: editor.state.selection.head

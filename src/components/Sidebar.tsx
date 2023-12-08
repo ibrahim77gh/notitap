@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, NavLink } from 'react-router-dom'
 import { usePages } from "@/contexts/PageContext";
 import axios from "axios";
+import { useDarkMode } from "@/contexts/DarkModeContext";
 
 type Page = {
   id: number;
@@ -18,6 +19,13 @@ const Sidebar: React.FC<SidebarProps> = ({ pages }) => {
   const [newPageName, setNewPageName] = useState('');
   const { allPages, setAllPages } = usePages();
   const navigate = useNavigate()
+  const { darkMode, toggleDarkMode } = useDarkMode();
+
+  useEffect(() => {
+    // Apply dark mode class to the document body
+    document.body.classList.toggle('dark', darkMode);
+  }, [darkMode]);
+
 
   const handleAddPage = () => {
       if (newPageName.trim() === '') {
@@ -45,6 +53,18 @@ const Sidebar: React.FC<SidebarProps> = ({ pages }) => {
       <div className="side-navigation-bar">
         <div className="scrollbar">
           <div>
+            <label className="relative inline-flex items-center me-5 cursor-pointer mb-5">
+              <input
+                type="checkbox"
+                className="sr-only peer"
+                checked={darkMode}
+                onChange={toggleDarkMode}
+              />
+              <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+              <span className="ms-3 text-sm font-medium">
+                {darkMode ? 'Dark Mode On' : 'Dark Mode Off'}
+              </span>
+            </label>
             <div className="scrollbar-title">
               <div className="scrollbar-title-inner">
                 <div className="scrollbar-title-inner-2">
@@ -60,7 +80,7 @@ const Sidebar: React.FC<SidebarProps> = ({ pages }) => {
                 placeholder="Enter page name"
                 value={newPageName}
                 onChange={(e) => setNewPageName(e.target.value)}
-                className="p-2 border border-gray-300 rounded-md mr-2"
+                className="p-2 border border-gray-300 rounded-md mr-2 new-page-input"
               />
               <button
                 className="p-2 bg-blue-500 text-white rounded-md"
@@ -82,7 +102,7 @@ const Sidebar: React.FC<SidebarProps> = ({ pages }) => {
                 </svg>
               </button>
             </div>
-
+            
             {pages.map((page) => {
               return (
                 <div key={page.id} className="page-button-outer">

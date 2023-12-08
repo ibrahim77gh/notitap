@@ -1,3 +1,19 @@
+/* styles.css */
+
+
+/* Add transitions for a smooth mode switch */
+.transition {
+  transition: background-color 0.3s ease;
+}
+
+.new-page-input {
+  color: inherit;
+  background-color: inherit;
+}
+
+.hover-effect:hover {
+  opacity: 0.8; /* Adjust the shadow as needed */
+}
 
   ::-webkit-scrollbar {
     width: 10px;
@@ -17,7 +33,9 @@
   }
 
   .page-button-inner:hover {
-    background: rgb(247, 246, 243);
+    transform: scale(1.1); /* Increase the scale factor for a more pronounced effect */
+    transition: transform 0.3s ease-in-out; /* Add a smooth transition for a better visual effect */
+    background-color: inherit;
   }
   
   header .page-button-inner {
@@ -95,6 +113,14 @@
     padding: 20px; /* Adjust the padding as needed */
     box-sizing: border-box; /* Include padding in the width */
     z-index: 1000; /* Adjust the z-index as needed */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    fill: #121212;
+  }
+
+  .dark .side-navigation-bar {
+    background: #282828; /* Use a lighter black background in dark mode */
+    color: #fff; /* Change the text color to white in dark mode */
+    fill: #fff;
   }
   
   
@@ -102,27 +128,6 @@
     padding: 0.5rem 1rem;
   }
   
-  .side-bar-user-info-outer {
-    user-select: none;
-    transition: background 20ms ease-in 0s;
-    display: flex;
-    align-items: center;
-    min-width: 0px;
-    height: 45px;
-    width: 100%;
-    margin-bottom: 0px;
-    z-index: 0;
-  }
-  
-  .side-bar-user-info {
-    display: flex;
-    align-items: center;
-    min-height: 27px;
-    font-size: 14px;
-    padding: 2px 14px;
-    width: 100%;
-    overflow: hidden;
-  }
   
   .info-hitbox {
     position: absolute;
@@ -135,37 +140,8 @@
     cursor: pointer;
   }
   
-  .side-bar-user-info > div {
-    z-index: 100;
-  }
-  
   .info-hitbox:hover {
     background-color: rgb(232, 231, 230);
-  }
-  
-  .side-bar-user-info .user-img {
-    flex-shrink: 0;
-    flex-grow: 0;
-    border-radius: 3px;
-    color: rgba(55, 53, 47, 0.6);
-    width: 22px;
-    height: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 8px;
-    padding: 0.75rem;
-    z-index: 100;
-  }
-  
-  .side-bar-user-info .user-img:hover {
-    background-color: rgb(211, 209, 207);
-  }
-  
-  .side-bar-user-info .user-img img {
-    width: 17.75px;
-    height: 17.75px;
-    border-radius: 3px;
   }
   
   .side-navigation-bar .user-name {
@@ -190,13 +166,25 @@
     cursor: text;
   }
   
+  /* styles.css */
   .main-content {
     width: 100%;
-    height: 100vh;
-    background: rgb(255, 255, 255);
+    height: 100%;
+    background: rgb(255, 255, 255); /* Default background color for light mode */
     margin-left: 250px;
+    transition: background-color 0.3s ease; /* Add transition for a smooth color change */
+  }
+
+  /* Dark mode styles for main content */
+  .dark .main-content {
+    background: #121212; /* Change the background color to black in dark mode */
+    color: #fff !important; /* Change the text color to white in dark mode (optional, add if needed) */
   }
   
+  .heading-color {
+    color:inherit !important;
+  }
+
   .page-content {
     display: flex;
     flex-direction: column;
@@ -393,7 +381,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: black;
+    color: inherit;
     font-weight: 400;
     font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
       Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
@@ -408,7 +396,7 @@
     flex-shrink: 0;
     flex-grow: 0;
     border-radius: 3px;
-    color: rgba(55, 53, 47, 0.6);
+    color: inherit;
     width: 22px;
     height: 22px;
     display: flex;
@@ -433,7 +421,7 @@
     width: 0.6875em;
     height: 0.6875em;
     display: block;
-    fill: rgba(55, 53, 47, 0.4);
+    fill: inherit;
     flex-shrink: 0;
     backface-visibility: hidden;
     transition: transform 200ms ease-out 0s;
@@ -449,9 +437,9 @@
     width: 100%;
   }
   
-  .scrollbar .page-button-outer a:hover {
+  /* .scrollbar .page-button-outer a:hover {
     background-color: rgb(232, 231, 230);
-  }
+  } */
   
   .scrollbar-title {
     display: flex;
@@ -489,7 +477,7 @@
     font-size: 11.5px;
     line-height: 1;
     margin-bottom: 1px;
-    color: rgba(55, 53, 47, 0.4);
+    color: inherit;
     font-weight: 600;
     transition: color 100ms ease-out 0s;
   }
