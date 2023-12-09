@@ -25,7 +25,8 @@ export default defineConfig(({ mode }) => {
     ],
     base: mode === "production" ? "/notitap/" : "/",
     server: {
-      port: 3002,
+      host: '0.0.0.0',
+      port: 4173,
     },
     resolve: {
       alias: {

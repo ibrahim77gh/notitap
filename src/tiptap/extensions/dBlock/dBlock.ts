@@ -111,8 +111,12 @@ export const DBlock = Node.create<DBlockOptions>({
         });
 
         const content = doc.slice(from, currentActiveNodeTo)?.toJSON().content;
+        const extractedType = content[0].type;
 
-        return editor
+        if (extractedType == "codeBlock") {
+          return false
+        } else {
+          return editor
           .chain()
           .insertContentAt(
             { from, to: currentActiveNodeTo },
@@ -123,6 +127,7 @@ export const DBlock = Node.create<DBlockOptions>({
           )
           .focus(from + 4)
           .run();
+        }
       },
     };
   }
