@@ -35,12 +35,6 @@ export const generalButtons: BubbleMenuItem[] = [
     iconClass: "i-ri-strikethrough",
   },
   {
-    tooltip: "Link",
-    action: (openLinkModal: Function) => openLinkModal(),
-    isActive: (editor: Editor) => editor.isActive("link"),
-    iconClass: "i-ri-link",
-  },
-  {
     tooltip: "Code",
     action: (editor: Editor) => editor.chain().focus().toggleCodeBlock().run(),
     isActive: (editor: Editor) => editor.isActive("code"),
@@ -55,6 +49,13 @@ export const generalButtons: BubbleMenuItem[] = [
       editor.chain().focus().setTextAlign("left").run(),
     isActive: (editor: Editor) => editor.isActive({ textAlign: "left" }),
     iconClass: "i-mdi-align-horizontal-left",
+  },
+  {
+    tooltip: "Align Center",
+    action: (editor: Editor) =>
+      editor.chain().focus().setTextAlign("center").run(),
+    isActive: (editor: Editor) => editor.isActive({ textAlign: "center" }),
+    iconClass: "i-mdi-align-horizontal-center",
   },
   {
     tooltip: "Align Right",

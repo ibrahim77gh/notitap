@@ -980,6 +980,11 @@
   resolved "https://registry.npmjs.org/@tiptap/extension-table/-/extension-table-2.1.12.tgz"
   integrity sha512-q/DuKZ4j1ycRfuFdb9rBJ3MglGNxlM2BQ1csScX/BrVIsAQI5B8sdzy1BrIlepQ6DRu4DCzHcKMI8u4/edUSWA==
 
+"@tiptap/extension-text-align@^2.1.13":
+  version "2.1.13"
+  resolved "https://registry.npmjs.org/@tiptap/extension-text-align/-/extension-text-align-2.1.13.tgz"
+  integrity sha512-ZmbGpi5FHGsWyzt+8DceXERr/Vwxhjpm2VKWZyFTVz8uNJVj+/ou196JQJZqxbp5VtKkS7UYujaO++G5eflb0Q==
+
 "@tiptap/extension-text-style@^2.0.0", "@tiptap/extension-text-style@^2.1.13":
   version "2.1.13"
   resolved "https://registry.npmjs.org/@tiptap/extension-text-style/-/extension-text-style-2.1.13.tgz"

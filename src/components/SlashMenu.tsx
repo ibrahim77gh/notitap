@@ -3,23 +3,64 @@ import { Editor } from '@tiptap/react'
 import { CiImageOn } from "react-icons/ci";
 import { FaTable } from "react-icons/fa";
 
+type MediaOptions = {
+    src: string;
+    "media-type": string 
+    alt: string;
+    title: string;
+    width: string;
+    height: string;
+};
+
 const SlashMenu = ({ editor }: { editor: Editor }) => {
     const videoUrl = "https://user-images.githubusercontent.com/45892659/178123048-0257e732-8cc2-466b-8447-1e2b7cd1b5d9.mov";
-    const addTable = () => editor?.commands.insertTable({ rows: 3, cols: 3, withHeaderRow: true })
-    const addVideo = () => editor?.commands.openPrompt({
-      "media-type": "video",
-      alt: "Some Video",
-      title: "Some Title Video",
-      width: "400",
-      height: "400",
-    });
-    const addImage = () => editor?.commands.openPrompt({
-        "media-type": "img",
-        alt: "Something else",
-        title: "Something",
-        width: "800",
-        height: "400",
-    });
+    const addTable = () => {
+        editor?.commands.deleteRange({
+            from: editor.state.selection.head - 1,
+            to: editor.state.selection.head
+            })
+        editor?.commands.insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+    }
+
+    const onSubmit = (options: MediaOptions) => {
+        editor?.commands.deleteRange({
+            from: editor.state.selection.head - 1,
+            to: editor.state.selection.head
+            })
+        editor?.commands.setMedia(options);
+    };
+
+    const addVideo = () => {
+        const link = window.prompt(`Enter video URL:`, "");
+
+        if (link) {
+            const options = {
+                "media-type": "video",
+                src: link,
+                alt: "Some Video",
+                title: "Some Title Video",
+                width: "400",
+                height: "400",
+            }
+            onSubmit(options);
+        }
+    };
+
+    const addImage = () => {
+        const link = window.prompt(`Enter image URL:`, "");
+
+        if (link) {
+            const options = {
+                "media-type": "img",
+                src: link,
+                alt: "Some Image",
+                title: "Some Title Image",
+                width: "400",
+                height: "400",
+            }
+            onSubmit(options);
+        }
+    };
 
   return (
     <>  

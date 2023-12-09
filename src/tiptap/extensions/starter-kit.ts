@@ -37,6 +37,7 @@ import { FontSize } from "./font-size/font-size";
 import { SmallText } from "./SmallText";
 import Color from "@tiptap/extension-color"
 import TextStyle from "@tiptap/extension-text-style";
+import TextAlign from "@tiptap/extension-text-align";
 
 // import { BackColor } from "./back-color/back-color";
 
@@ -160,6 +161,9 @@ export const getExtensions = ({
     TextStyle,
     Color.configure({
       types: ['textStyle'],
+    }),
+    TextAlign.configure({
+      types: ['heading', 'paragraph'],
     }),
     Document,
     DBlock,

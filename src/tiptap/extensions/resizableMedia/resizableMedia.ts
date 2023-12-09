@@ -4,6 +4,7 @@ import { ReactNodeViewRenderer } from "@tiptap/react";
 import { getMediaPasteDropPlugin, UploadFnType } from "./mediaPasteDropPlugin";
 
 import { ResizableMediaNodeView } from "./ResizableMediaNodeView";
+import { SingleCommands } from "@tiptap/react";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
@@ -12,7 +13,7 @@ declare module "@tiptap/core" {
        * Set media
        */
       setMedia: (options: {
-        "media-type": "img" | "video";
+        "media-type": string;
         src: string;
         alt?: string;
         title?: string;
@@ -165,25 +166,6 @@ export const ResizableMedia = Node.create<MediaOptions>({
             attrs: options,
           });
         },
-
-        openPrompt:
-          (options) =>
-          ({ tr, commands }) => {
-            const { "media-type": mediaType, alt, title, width, height } = options;
-
-            const onSubmit = async (src: string) => {
-              const attrs = { src, "media-type": mediaType, alt, title, width, height };
-              await commands.setMedia(attrs)(tr);
-            };
-
-            // Basic prompt implementation, you might want to use a more sophisticated prompt/modal library
-            const link = window.prompt(`Enter ${mediaType === "img" ? "image" : "video"} URL:`, "");
-
-            if (link) {
-              onSubmit(link);
-            }
-        },
-
     };
   },
 
