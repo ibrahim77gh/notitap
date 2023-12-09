@@ -13,7 +13,6 @@ import "tippy.js/animations/shift-toward-subtle.css";
 // import applyDevTools from "prosemirror-dev-tools";
 
 import { getExtensions } from "./extensions";
-// import { CustomBubbleMenu, LinkBubbleMenu } from "./menus";
 
 import axios from 'axios';
 import "./styles/tiptap.scss";
