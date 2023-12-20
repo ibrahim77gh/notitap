@@ -50,6 +50,9 @@ export const DBlockNodeView: React.FC<NodeViewProps> = ({
           draggable
           data-drag-handle
           onDragEnd={() => {editor.commands.setTextSelection(0)}}
+          onDragEndCapture={() => {editor.commands.setTextSelection(0)}}
+          onDragEnterCapture={() => {editor.commands.setTextSelection(0)}}
+          onDragEnter={() => {editor.commands.setTextSelection(0)}}
         >
           <i className="i-ic-baseline-drag-indicator" />
         </div>
