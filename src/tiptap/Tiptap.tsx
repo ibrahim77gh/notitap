@@ -90,7 +90,7 @@ export const Tiptap: React.FC<{ page: Page }> = ({ page }) => {
     },[editor])
     useEffect(() => {
         const saveInterval = setInterval(saveHtmlContent, 30000);
-        const newProvider = new WebsocketProvider('ws://localhost:1234', pageTitle, doc);
+        const newProvider = new WebsocketProvider('ws://24.144.83.75/websocket', pageTitle, doc);
         setProvider(newProvider);
         newProvider.on('status', (event: { status: any; }) => {
             console.log(event.status,'---------') // logs "connected" or "disconnected"

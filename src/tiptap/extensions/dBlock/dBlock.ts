@@ -72,7 +72,7 @@ export const DBlock = Node.create<DBlockOptions>({
                 },
               ],
             })
-            .focus(pos + 2)
+            .focus(pos + 4)
             .run();
         },
     };
@@ -116,17 +116,13 @@ export const DBlock = Node.create<DBlockOptions>({
         if (extractedType == "codeBlock") {
           return false
         } else {
-          return editor
-          .chain()
-          .insertContentAt(
-            { from, to: currentActiveNodeTo },
-            {
-              type: this.name,
-              content,
-            }
-          )
-          .focus(from + 4)
-          .run();
+          const pos = from + 4;
+          editor.commands.insertContentAt(pos, {
+            type: 'dblock', // Change this to the type you want
+            content: [{ type: 'paragraph', text: '' }], // Empty text node
+          });
+          // editor.commands.focus(pos + 2);
+          return editor.commands.setDBlock();
         }
       },
     };

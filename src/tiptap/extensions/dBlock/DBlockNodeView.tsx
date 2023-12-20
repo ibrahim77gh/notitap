@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import { NodeViewWrapper, NodeViewProps, NodeViewContent } from "@tiptap/react";
 
 export const DBlockNodeView: React.FC<NodeViewProps> = ({
@@ -8,6 +8,7 @@ export const DBlockNodeView: React.FC<NodeViewProps> = ({
   getPos,
   editor,
 }) => {
+
   const isTable = useMemo(() => {
     const { content } = node.content as any;
 
@@ -26,6 +27,8 @@ export const DBlockNodeView: React.FC<NodeViewProps> = ({
       ],
     });
   };
+  
+  
 
   return (
     <NodeViewWrapper as="div" className="flex gap-2 group w-full relative">
@@ -46,6 +49,7 @@ export const DBlockNodeView: React.FC<NodeViewProps> = ({
           contentEditable={false}
           draggable
           data-drag-handle
+          onDragEnd={() => {editor.commands.setTextSelection(0)}}
         >
           <i className="i-ic-baseline-drag-indicator" />
         </div>
