@@ -7,7 +7,7 @@ import { useDarkMode } from "@/contexts/DarkModeContext";
 type Page = {
   id: number;
   title: string;
-  content: string;
+  content: string | null;
 };
 
 interface SidebarProps {
@@ -17,7 +17,7 @@ const defaultUserImg = "https://bit.ly/3rDDSOw";
 
 const Sidebar: React.FC<SidebarProps> = ({ pages }) => {
   const [newPageName, setNewPageName] = useState('');
-  const { allPages, setAllPages } = usePages();
+  const { allPages, setAllPages, addPage, deletePage } = usePages();
   const navigate = useNavigate()
   const { darkMode, toggleDarkMode } = useDarkMode();
 
@@ -27,26 +27,45 @@ const Sidebar: React.FC<SidebarProps> = ({ pages }) => {
   }, [darkMode]);
 
 
-  const handleAddPage = () => {
+  const handleAddPage = async () => {
       if (newPageName.trim() === '') {
           // Do not add a page with an empty name
           return;
       }
       // Create a new page object and add it to your pages state or data structure
       const newPage = {
+          id:1,
           title: newPageName,
+          content: null,
       };
       axios.post(`${import.meta.env.VITE_API_URL}/api/page/`, newPage)
         .then((response) => {
           console.log(response.data);
           const page = response.data
           setNewPageName(page.title)
-          setAllPages((prevPages) => [...prevPages, response.data]);
+          addPage(newPage)
+          newPageName && navigate(`/${newPageName}`);
+          setNewPageName('');
         })
         .catch((error) => console.error('Error saving HTML content:', error));
 
-        newPageName && navigate(`/${newPageName}`);
   }
+  
+  const handleDelete = async (e: React.MouseEvent, page: Page) => {
+    e.stopPropagation();
+    try {
+      const response = await axios.delete(`${import.meta.env.VITE_API_URL}/api/page/${page.title}`);
+      await deletePage(page.id);
+      console.log('Page Deleted:', response.data); // Assuming the response contains useful information
+  
+      // Handle any additional logic after successful deletion
+    } catch (error) {
+      console.error('Error deleting page:', error);
+  
+      // Handle the error, e.g., show a notification to the user
+      // You might also want to set state or trigger other actions based on the error
+    }
+  };
 
   return (
     <>
@@ -106,18 +125,18 @@ const Sidebar: React.FC<SidebarProps> = ({ pages }) => {
             {pages.map((page) => {
               return (
                 <div key={page.id} className="page-button-outer">
-                  <a href={page.title}>
-                    <div className="page-button">
-                      <div className="page-button-inner">
-                        <div className="triangle-container">
-                          <div className="triangle-container-inner">
-                            <span>
-                              <svg viewBox="0 0 100 100" className="triangle">
-                                <polygon points="5.9,88.2 50,11.8 94.1,88.2"></polygon>
-                              </svg>
-                            </span>
-                          </div>
+                  <div className="page-button">
+                    <div className="page-button-inner">
+                      <div className="triangle-container">
+                        <div className="triangle-container-inner">
+                          <span>
+                            <svg viewBox="0 0 100 100" className="triangle">
+                              <polygon points="5.9,88.2 50,11.8 94.1,88.2"></polygon>
+                            </svg>
+                          </span>
                         </div>
+                      </div>
+                      <a href={page.title}>
                         <span>
                           <span className="scrollbar-page-icon">
                             📄
@@ -126,9 +145,12 @@ const Sidebar: React.FC<SidebarProps> = ({ pages }) => {
                             {page.title ? page.title : "No name"}
                           </span>
                         </span>
-                      </div>
+                      </a>
+                      <span className="ml-auto cursor-pointer" onClick={(e) => handleDelete(e, page)}>
+                        <img width={15} height={15} src="/red-trash-can-icon.png" alt="Red Trash Can Icon" />
+                      </span>
                     </div>
-                  </a>
+                  </div>
                 </div>
               );
             })}

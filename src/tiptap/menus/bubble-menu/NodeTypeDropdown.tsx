@@ -44,7 +44,7 @@ export const NodeTypeDropdown = ({ editor }: { editor: Editor }) => {
           </div>
           <button
             type="button"
-            className="flex items-center justify-between node-type-dropdown-button"
+            className="flex items-center justify-between node-type-dropdown-button text-black"
             onClick={() => editor.chain().focus().setParagraph().run()}
           >
             <div className="flex items-center align-middle">
@@ -55,7 +55,7 @@ export const NodeTypeDropdown = ({ editor }: { editor: Editor }) => {
           </button>
           <button
             type="button"
-            className="flex items-center justify-between node-type-dropdown-button"
+            className="flex items-center justify-between node-type-dropdown-button text-black"
             onClick={() =>
               editor.chain().focus().toggleHeading({ level: 1 }).run()
             }
@@ -75,7 +75,7 @@ export const NodeTypeDropdown = ({ editor }: { editor: Editor }) => {
           </button>
           <button
             type="button"
-            className="flex items-center justify-between node-type-dropdown-button"
+            className="flex items-center justify-between node-type-dropdown-button text-black"
             onClick={() =>
               editor.chain().focus().toggleHeading({ level: 2 }).run()
             }
@@ -95,7 +95,7 @@ export const NodeTypeDropdown = ({ editor }: { editor: Editor }) => {
           </button>
           <button
             type="button"
-            className="flex items-center justify-between node-type-dropdown-button"
+            className="flex items-center justify-between node-type-dropdown-button text-black"
             onClick={() =>
               editor.chain().focus().toggleHeading({ level: 3 }).run()
             }
@@ -115,7 +115,7 @@ export const NodeTypeDropdown = ({ editor }: { editor: Editor }) => {
           </button>
           <button
             type="button"
-            className="flex items-center justify-between node-type-dropdown-button"
+            className="flex items-center justify-between node-type-dropdown-button text-black"
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
           >
             <div className="flex items-center align-middle">
@@ -131,7 +131,7 @@ export const NodeTypeDropdown = ({ editor }: { editor: Editor }) => {
           </button>
           <button
             type="button"
-            className="flex items-center justify-between node-type-dropdown-button"
+            className="flex items-center justify-between node-type-dropdown-button text-black"
             onClick={() => editor.chain().focus().toggleBulletList().run()}
           >
             <div className="flex items-center align-middle">

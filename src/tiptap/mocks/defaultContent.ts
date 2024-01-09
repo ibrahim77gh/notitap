@@ -4,7 +4,7 @@ export const content: Content = {
   type: "doc",
   content: [
     {
-      type: "dBlock",
+      type: "dragAndDrop",
       content: [
         {
           type: "heading",

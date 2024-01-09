@@ -4,12 +4,14 @@ import axios from 'axios';
 type Page = {
   id: number;
   title: string;
-  content: string;
+  content: string | null;
 };
 
 type PagesContextType = {
   allPages: Page[];
   setAllPages: React.Dispatch<React.SetStateAction<Page[]>>;
+  addPage: (newPage: Page) => void;
+  deletePage: (pageId: number) => void;
 };
 
 const PagesContext = createContext<PagesContextType | undefined>(undefined);
@@ -21,29 +23,37 @@ type PagesProviderProps = {
 export const PagesProvider: React.FC<PagesProviderProps> = ({ children }) => {
   const [allPages, setAllPages] = useState<Page[]>([]);
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/page/`);
+      console.log(response.data);
+      setAllPages(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
   useEffect(() => {
-    // Function to fetch data from the API and set it to the context
-    const fetchData = async () => {
-      try {
-        axios.get(`${import.meta.env.VITE_API_URL}/api/page/`)
-        .then((response) => {
-          console.log(response.data);
-          setAllPages(response.data);
-        })
-        .catch((error) => console.error('Error fetching content:', error));
-
-        // Assuming your API response is an array of pages
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
     // Call the fetchData function when the component mounts
     fetchData();
   }, []);
 
+  const addPage = (newPage: Page) => {
+    setAllPages((prevPages) => [...prevPages, newPage]);
+    
+    // Make a new API call to update the data
+    fetchData();
+  };
+
+  const deletePage = (pageId: number) => {
+    setAllPages((prevPages) => prevPages.filter((page) => page.id !== pageId));
+    
+    // Make a new API call to update the data
+    fetchData();
+  };
+
   return (
-    <PagesContext.Provider value={{ allPages, setAllPages }}>
+    <PagesContext.Provider value={{ allPages, setAllPages, addPage, deletePage }}>
       {children}
     </PagesContext.Provider>
   );
@@ -58,3 +68,4 @@ export const usePages = (): PagesContextType => {
 
   return context;
 };
+

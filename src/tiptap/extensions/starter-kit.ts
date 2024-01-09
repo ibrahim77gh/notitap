@@ -1,7 +1,9 @@
 import { AnyExtension, Editor, Extension } from "@tiptap/core";
 import Text from "@tiptap/extension-text";
 import BulletList from "@tiptap/extension-bullet-list";
+
 import OrderedList from "@tiptap/extension-ordered-list";
+// import OrderedList from "./ordered-list";
 import ListItem from "@tiptap/extension-list-item";
 import Bold from "@tiptap/extension-bold";
 import Italic from "@tiptap/extension-italic";
@@ -18,6 +20,7 @@ import { Plugin } from "prosemirror-state";
 import { Decoration, DecorationSet } from "prosemirror-view";
 
 import Collaboration from "@tiptap/extension-collaboration";
+import { HocuspocusProvider } from '@hocuspocus/provider'
 // import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 
 // CodeBlock
@@ -126,17 +129,21 @@ export const Placeholder = Extension.create<PlaceholderOptions>({
   },
 });
 
+type Page = {
+  id: number;
+  title: string;
+  content: string | null;
+};
+
+
 interface GetExtensionsProps {
   openLinkModal: () => void;
-  doc: any;
-  provider: any;
+  page: Page;
 }
 
 export const getExtensions = ({
   openLinkModal,
-  doc,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  provider,
+  page,
 }: GetExtensionsProps): AnyExtension[] => {
   const lowlight = createLowlight();
   // load all highlight.js languages
@@ -144,9 +151,18 @@ export const getExtensions = ({
   lowlight.register({ css });
   lowlight.register({ javascript });
   lowlight.register({ typescript });
+
+  const newProvider = new HocuspocusProvider({
+    // url: 'ws://127.0.0.1:1234/collaboration',
+    url: 'ws://24.144.83.75:1234/collaboration',
+    name: `${page.title}`,
+    token: "super-secret-token",
+  })
+
   return [
     Collaboration.configure({
-      document: doc,
+      document: newProvider.document,
+      
     }),
     // CollaborationCursor.configure({
     //   provider,
@@ -176,7 +192,7 @@ export const getExtensions = ({
       color: "skyblue",
     }),
     GapCursor,
-    History,
+    // History,
     HardBreak,
 
     // marks
@@ -195,7 +211,9 @@ export const getExtensions = ({
     // Node
     ListItem,
     BulletList,
-    OrderedList,
+    OrderedList.configure({
+      keepMarks: true,
+    }),
     Heading.configure({
       levels: [1, 2, 3],
       HTMLAttributes: {

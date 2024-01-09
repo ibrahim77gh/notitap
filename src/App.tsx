@@ -33,6 +33,7 @@ function App() {
           {allPages?.map((page) => (
             <Route key={page.id} path={`${page.title}`} element={<Tiptap page={page} />} />
           ))}
+          <Route path={`ibrahim`} element={<Tiptap page={{id: 1, title: 'ibrahim', content: ''}} />} />
         </Route>
       </Routes>
     </BrowserRouter>
