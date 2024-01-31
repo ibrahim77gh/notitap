@@ -266,7 +266,7 @@ export const getExtensions = ({
         } finally {
           // do your thing
         }
-        return "https://source.unsplash.com/8xznAGy4HcY/800x400";
+        return "";
       },
     }),
 
