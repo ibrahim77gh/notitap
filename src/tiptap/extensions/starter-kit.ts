@@ -171,7 +171,7 @@ export const getExtensions = ({
 
   const newProvider = new HocuspocusProvider({
     // url: 'ws://127.0.0.1:1234/collaboration',
-    url: 'ws://24.144.83.75:1234/collaboration',
+    url: 'ws://24.144.83.75/collaboration',
     name: `${page.title}`,
     token: "super-secret-token",
   })
