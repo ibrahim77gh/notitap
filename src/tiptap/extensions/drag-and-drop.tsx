@@ -1,5 +1,5 @@
 import { Extension } from "@tiptap/core";
-
+import "../styles/tiptap.scss";
 import { NodeSelection, Plugin } from "@tiptap/pm/state";
 // @ts-ignore
 import { __serializeForClipboard, EditorView } from "@tiptap/pm/view";
@@ -199,7 +199,7 @@ function DragHandle(options: DragHandleOptions) {
 interface DragAndDropOptions {}
 
 const DragAndDrop = Extension.create<DragAndDropOptions>({
-  name: "dBlock",
+  name: "dragAndDrop",
 
   addProseMirrorPlugins() {
     return [

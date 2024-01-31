@@ -1,61 +1,54 @@
-import { mergeAttributes, Node, textblockTypeInputRule } from '@tiptap/core';
+import { mergeAttributes, Node } from '@tiptap/core'
 
-export interface SmallTextOptions {
-  HTMLAttributes: Record<string, any>;
+export interface SmallOptions {
+  HTMLAttributes: Record<string, any>,
 }
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     smallText: {
       /**
-       * Set a small text node
+       * Toggle a paragraph
        */
-      setSmallText: () => ReturnType;
-    };
+      setSmallText: () => ReturnType,
+    }
   }
 }
 
-export const SmallText = Node.create<SmallTextOptions>({
+export const SmallText = Node.create<SmallOptions>({
   name: 'smallText',
 
   addOptions() {
     return {
-      HTMLAttributes: {
-        style: {
-          fontSize: 'small', // Set your desired small font size here
-        },
-      },
-    };
+      HTMLAttributes: {},
+    }
   },
-
-  content: 'inline*',
 
   group: 'block',
 
-  defining: true,
+  content: 'inline*',
 
   parseHTML() {
-    return [{ tag: 'p.small-text' }];
+    return [
+      { tag: 'small' },
+    ]
   },
 
   renderHTML({ HTMLAttributes }) {
-    return ['p', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0];
+    return ['small', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
   },
 
   addCommands() {
     return {
       setSmallText: () => ({ commands }) => {
-        return commands.setNode(this.name);
+        return commands.setNode(this.name)
       },
-    };
+    }
   },
 
-  addInputRules() {
-    return [
-      textblockTypeInputRule({
-        find: /^(\/)\s$/,
-        type: this.type,
-      }),
-    ];
-  },
-});
+  // addKeyboardShortcuts() {
+  //   return {
+  //     'Mod-Alt-0': () => this.editor.commands.setSmallText(),
+  //   }
+  // },
+})

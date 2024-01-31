@@ -21,6 +21,9 @@ export const NodeTypeDropdown = ({ editor }: { editor: Editor }) => {
     if (editor.isActive("bulletList")) {
       return "Bulleted list";
     }
+    if (editor.isActive("smallText")) {
+      return "Small text";
+    }
 
     return "Normal text";
   };
@@ -28,7 +31,8 @@ export const NodeTypeDropdown = ({ editor }: { editor: Editor }) => {
   const isOnlyParagraph =
     !editor.isActive("bulletList") &&
     !editor.isActive("orderedList") &&
-    !editor.isActive("heading");
+    !editor.isActive("smallText") &&
+    !editor.isActive("heading"); 
 
   return (
     <Tippy
@@ -52,6 +56,17 @@ export const NodeTypeDropdown = ({ editor }: { editor: Editor }) => {
               <span className="ml-1">Text</span>
             </div>
             {isOnlyParagraph && <i className="i-mdi-check" />}
+          </button>
+          <button
+            type="button"
+            className="flex items-center justify-between node-type-dropdown-button text-black"
+            onClick={() => editor.chain().focus().setSmallText().run()}
+          >
+            <div className="flex items-center align-middle">
+              <img src="/editor/text.png" width="24" height="24" alt="Text" />
+              <span className="ml-1">Small Text</span>
+            </div>
+            {editor.isActive("smallText") && <i className="i-mdi-check" />}
           </button>
           <button
             type="button"

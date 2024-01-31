@@ -79,7 +79,7 @@ const SlashMenu = ({ editor }: { editor: Editor }) => {
                 <span className="text-xs text-zinc-400">Normal Text</span>
             </div>
         </button>
-        {/* <button 
+        <button 
             className="flex items-center gap-2 p-1 rounded min-w-[280px] hover-effect"
             onClick={() => 
                 editor.chain().focus().setSmallText().deleteRange({
@@ -93,7 +93,7 @@ const SlashMenu = ({ editor }: { editor: Editor }) => {
                 <span className="text-sm">Small</span>
                 <span className="text-xs text-zinc-400">Small Text</span>
             </div>
-        </button> */}
+        </button>
         <button 
             className="flex items-center gap-2 p-1 rounded min-w-[280px] hover-effect"
             onClick={() => 

@@ -14,7 +14,6 @@ import "tippy.js/animations/shift-toward-subtle.css";
 
 import { getExtensions } from "./extensions";
 
-import axios from 'axios';
 import "./styles/tiptap.scss";
 import "highlight.js/styles/github.css";
 
@@ -52,11 +51,11 @@ export const Tiptap: React.FC<{ page: Page }> = ({ page }) => {
         extensions: getExtensions({ openLinkModal, page,}),
         content,
         editorProps: {
-        attributes: {
-            class: `${notitapEditorClass} focus:outline-none w-full`,
-            spellcheck: "false",
-            suppressContentEditableWarning: "true",
-        },
+            attributes: {
+                class: `${notitapEditorClass} focus:outline-none w-full`,
+                spellcheck: "false",
+                suppressContentEditableWarning: "true",
+            },
         },
         // onUpdate: debounce(({ editor: e }) => {
         //     // setHtmlContent(e?.getHTML())

@@ -32,20 +32,37 @@ import css from "highlight.js/lib/languages/css";
 import { TrailingNode } from "./trailingNode";
 import { ResizableMedia } from "./resizableMedia";
 import { SuperchargedTableExtensions } from "./supercharged-table";
-import { Paragraph } from "./paragraph";
+// import { Paragraph } from "./paragraph";
+import Paragraph from '@tiptap/extension-paragraph'
 import { Link } from "./link";
-import { DBlock } from "./dBlock";
-import { Document } from "./doc";
+// import { DBlock } from "./dBlock";
+// import { Document } from "./doc";
+import Document from '@tiptap/extension-document'
 import { FontSize } from "./font-size/font-size";
-import { SmallText } from "./SmallText";
+
 import Color from "@tiptap/extension-color"
 import TextStyle from "@tiptap/extension-text-style";
 import TextAlign from "@tiptap/extension-text-align";
+
+import CustomKeymap from "./custom-keymap";
+import DragAndDrop from "./drag-and-drop";
+import { SmallText } from "./SmallText";
+import { Node } from "@tiptap/core";
+// import RootBlock from "./root-block/root-block";
+// import Keymap from "./root-block/keymap";
 
 // import { BackColor } from "./back-color/back-color";
 
 
 // import html from "highlight.js/lib/languages/html"
+
+
+// const Document = Node.create({
+//   name: "doc",
+//   topNode: true,
+//   content: "rootblock+",
+// });
+
 
 export interface PlaceholderOptions {
   emptyEditorClass: string;
@@ -162,13 +179,15 @@ export const getExtensions = ({
   return [
     Collaboration.configure({
       document: newProvider.document,
-      
     }),
+    DragAndDrop,
+    CustomKeymap,
     // CollaborationCursor.configure({
     //   provider,
     //   user: { name: "John Doe", color: "#ffcc00" },
     // }),
-
+    // RootBlock,
+    // Keymap,
     // Necessary
     FontSize,
     CodeBlockLowlight.configure({
@@ -182,7 +201,7 @@ export const getExtensions = ({
       types: ['heading', 'paragraph'],
     }),
     Document,
-    DBlock,
+    // DBlock,
     Paragraph,
     SmallText,
     Text,
@@ -212,7 +231,7 @@ export const getExtensions = ({
     ListItem,
     BulletList,
     OrderedList.configure({
-      keepMarks: true,
+      keepMarks: false,
     }),
     Heading.configure({
       levels: [1, 2, 3],
@@ -220,7 +239,7 @@ export const getExtensions = ({
         class: 'heading-color',
       },
     }),
-    TrailingNode,
+    // TrailingNode,
 
     // Table
     ...SuperchargedTableExtensions,
