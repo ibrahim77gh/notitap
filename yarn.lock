@@ -909,10 +909,10 @@
   resolved "https://registry.npmjs.org/@tiptap/extension-code-block-lowlight/-/extension-code-block-lowlight-2.1.16.tgz"
   integrity sha512-tudlWkCcd+wrVot9yWQJLMd3Y6u5ma4tVDju3EEruzC/Tpf/Uoxj/HBoPIGT2L+l/O3Qq1OPeSkmeaW6qAdpPA==
 
-"@tiptap/extension-code-block@^2.0.0", "@tiptap/extension-code-block@^2.1.16":
-  version "2.1.16"
-  resolved "https://registry.npmjs.org/@tiptap/extension-code-block/-/extension-code-block-2.1.16.tgz"
-  integrity sha512-IspVmwg17Vx59W8lEIbVRIeMscJtRCdsif45CkzVv1uSHMl7tmrJh3n8vv/vrB+rnLasQrOEbEKNEqUL3eHlKQ==
+"@tiptap/extension-code-block@^2.0.0", "@tiptap/extension-code-block@^2.1.16", "@tiptap/extension-code-block@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.npmjs.org/@tiptap/extension-code-block/-/extension-code-block-2.2.1.tgz"
+  integrity sha512-8Urq8OvdBXDs8cX7Tgw71uyHQknqOeEgU0w4PvhFlOnDKUyehiUGys86k/NUJwP2P9O+YGToM3sVJF0ONdlNGQ==
 
 "@tiptap/extension-code@^2.1.16":
   version "2.1.16"

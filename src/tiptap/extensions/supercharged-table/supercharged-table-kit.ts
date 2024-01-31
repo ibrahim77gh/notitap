@@ -7,7 +7,9 @@ import { TableRow } from "./extension-table-row";
 
 export const SuperchargedTableExtensions: AnyExtension[] = [
   Table.configure({
-    resizable: false,
+    resizable: true,
+    lastColumnResizable: false,
+    allowTableNodeSelection: true,
   }),
   TableCell,
   TableHeader,

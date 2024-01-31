@@ -29,6 +29,8 @@ import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import javascript from "highlight.js/lib/languages/javascript";
 import typescript from "highlight.js/lib/languages/typescript";
 import css from "highlight.js/lib/languages/css";
+import CodeBlock from '@tiptap/extension-code-block'
+
 import { TrailingNode } from "./trailingNode";
 import { ResizableMedia } from "./resizableMedia";
 import { SuperchargedTableExtensions } from "./supercharged-table";
@@ -170,8 +172,8 @@ export const getExtensions = ({
   lowlight.register({ typescript });
 
   const newProvider = new HocuspocusProvider({
-    // url: 'ws://127.0.0.1:1234/collaboration',
-    url: 'ws://24.144.83.75/collaboration',
+    url: 'ws://127.0.0.1:1234/collaboration',
+    // url: 'ws://24.144.83.75/collaboration',
     name: `${page.title}`,
     token: "super-secret-token",
   })
@@ -190,9 +192,10 @@ export const getExtensions = ({
     // Keymap,
     // Necessary
     FontSize,
-    CodeBlockLowlight.configure({
-      lowlight,
-    }),
+    // CodeBlockLowlight.configure({
+    //   lowlight,
+    // }),
+    CodeBlock,
     TextStyle,
     Color.configure({
       types: ['textStyle'],
