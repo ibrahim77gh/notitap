@@ -65,6 +65,9 @@ import { Node } from "@tiptap/core";
 //   content: "rootblock+",
 // });
 
+const CustomCodeBlock = CodeBlock.extend({
+  draggable: true
+})
 
 export interface PlaceholderOptions {
   emptyEditorClass: string;
@@ -195,7 +198,8 @@ export const getExtensions = ({
     // CodeBlockLowlight.configure({
     //   lowlight,
     // }),
-    CodeBlock,
+    // CodeBlock,
+    CustomCodeBlock,
     TextStyle,
     Color.configure({
       types: ['textStyle'],
